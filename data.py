@@ -79,11 +79,15 @@ def insert_drink(homie_fb_id, bottle_name=None):
         bottle_entry = execute_statement("SELECT * FROM bottles WHERE homie_fb_id = %s AND bottle_name = %s;", args=(homie_fb_id, bottle_name), ret=True)
         bottle_id = bottle_entry[0][0]
 
-    # Adds a drink event with the currently selected bottle id
-    add_drink_sql = """INSERT INTO drinks (homie_fb_id, bottle_id) VALUES(%s, %s);"""
-    execute_statement(add_drink_sql, (homie_fb_id, bottle_id))
-    # Updates the total number of drink events logged by that bottle
-    execute_statement("UPDATE bottles set num_drinks = num_drinks+1 WHERE homie_fb_id = %s AND bottle_id = %s;", args=(homie_fb_id, bottle_id))
+    if bottle_id:
+        # Adds a drink event with the currently selected bottle id
+        add_drink_sql = """INSERT INTO drinks (homie_fb_id, bottle_id) VALUES(%s, %s);"""
+        execute_statement(add_drink_sql, (homie_fb_id, bottle_id))
+        # Updates the total number of drink events logged by that bottle
+        execute_statement("UPDATE bottles set num_drinks = num_drinks+1 WHERE homie_fb_id = %s AND bottle_id = %s;", args=(homie_fb_id, bottle_id))
+        return True
+    else:
+        return False
 
 def insert_homie(homie_fb_id, homie_name):
     insert_bottle("NULL", "0", homie_fb_id)

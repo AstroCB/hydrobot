@@ -90,8 +90,8 @@ physics decrement - remove the last drink event
         elif ma[1] == "increment" or ma[1] == "inc":
             homie_increment(self, thread_id, thread_type, author_id)
         elif ma[1] == "drink":
-            data.insert_drink(author_id, bottle_name=ma[2])
-            self.reactToMessage(message_object.uid, '👍')
+            if data.insert_drink(author_id, bottle_name=ma[2]):
+                self.reactToMessage(message_object.uid, '👍')
         elif ma[1] == "stats":
             verbose_list = ["-v", "full", "verbose", "--verbose"]
             if len(ma)>2 and ma[2] in verbose_list:
