@@ -44,12 +44,12 @@ class HydroBot(Client):
             ma = messageText.split() # message array
 
             if ma[0].lower() == "physics":
-                process_message(self, author_id, ma, thread_id, thread_type)
+                process_message(self, author_id, ma, thread_id, thread_type, message_object)
             elif messageText == client.fetchThreadInfo(thread_id)[thread_id].emoji:
                 homie_increment(self, thread_id, thread_type, author_id)
         super(HydroBot, self).onMessage(author_id=author_id, message_object=message_object, thread_id=thread_id, thread_type=thread_type, **kwargs)
 
-def process_message(self, author_id, ma, thread_id, thread_type):
+def process_message(self, author_id, ma, thread_id, thread_type, message_object):
     if author_id != self.uid:
         print(ma)
         user = self.fetchUserInfo(author_id)[author_id]
@@ -91,6 +91,7 @@ physics decrement - remove the last drink event
             homie_increment(self, thread_id, thread_type, author_id)
         elif ma[1] == "drink":
             data.insert_drink(author_id, bottle_name=ma[2])
+            self.reactToMessage(message_object.uid, '👍')
         elif ma[1] == "stats":
             verbose_list = ["-v", "full", "verbose", "--verbose"]
             if len(ma)>2 and ma[2] in verbose_list:
