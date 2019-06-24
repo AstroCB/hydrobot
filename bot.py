@@ -79,6 +79,7 @@ physics decrement - remove the last drink event
             data.insert_bottle(ma[2], ma[3], author_id)
         elif ma[1] == "remove":
             data.delete_bottle(ma[2], author_id)
+            self.reactToMessage(message_object.uid, MessageReaction.YES)
         elif ma[1] == "switch":
             data.switch_bottle(ma[2], author_id)
             self.reactToMessage(message_object.uid, MessageReaction.YES)
