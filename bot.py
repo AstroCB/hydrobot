@@ -7,7 +7,7 @@ import re
 import sys
 
 from fbchat import Client, log
-from fbchat.models import Message, ThreadType
+from fbchat.models import Message, ThreadType, MessageReaction
 
 import data
 
@@ -81,6 +81,7 @@ physics decrement - remove the last drink event
             data.delete_bottle(ma[2], author_id)
         elif ma[1] == "switch":
             data.switch_bottle(ma[2], author_id)
+            self.reactToMessage(message_object.uid, MessageReaction.YES)
         elif ma[1] == "rename":
             pass
         elif ma[1] == "list":
@@ -91,7 +92,7 @@ physics decrement - remove the last drink event
             homie_increment(self, thread_id, thread_type, author_id)
         elif ma[1] == "drink":
             if data.insert_drink(author_id, bottle_name=ma[2]):
-                self.reactToMessage(message_object.uid, '👍')
+                self.reactToMessage(message_object.uid, MessageReaction.YES)
         elif ma[1] == "stats":
             verbose_list = ["-v", "full", "verbose", "--verbose"]
             if len(ma)>2 and ma[2] in verbose_list:
