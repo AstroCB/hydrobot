@@ -70,6 +70,7 @@ physics remove [name] - remove your bottle called [name] (Warning, will delete a
 physics switch [name] - switch your current bottle to the bottle with [name]
 physics drink [name] - logs a single drink with bottle [name], does not change current bottle
 physics rename [name] [newname] - NOT WORKING
+physics resize [name] [newsize] - gives bottle [name] a new size [newsize] (this affects all past drink events)
 physics list - shows all of your bottles
 physics decrement - remove the last drink event
 {} - tap emoji to log a drink, uses your current bottle
@@ -83,6 +84,8 @@ physics decrement - remove the last drink event
             data.switch_bottle(ma[2], author_id)
         elif ma[1] == "rename":
             pass
+        elif ma[1] == "resize":
+            data.resize_bottle(ma[2], ma[3], author_id)
         elif ma[1] == "list":
             get_homie_bottles(self, thread_id, thread_type, author_id)
         elif ma[1] == "decrement" or ma[1] == "dec":

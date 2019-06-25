@@ -117,6 +117,11 @@ def get_bottle(homie_fb_id):
 def insert_bottle(name, size, homie_fb_id):
     new_bottle_sql = """INSERT INTO bottles (homie_fb_id, bottle_name, bottle_size, num_drinks) VALUES(%s, %s, %s, %s);"""
     return execute_statement(new_bottle_sql, [homie_fb_id, name, size, 0])
+
+def resize_bottle(name, size, homie_fb_id):
+    bottle_entry = execute_statement("SELECT * FROM bottles WHERE homie_fb_id = %s AND bottle_name = %s;", args=(homie_fb_id, name), ret=True)
+    bottle_id = bottle_entry[0][0]
+    return execute_statement("UPDATE bottles SET bottle_size = %s WHERE bottle_id = %s", (size, bottle_id))
     
 def delete_bottle(name, homie_fb_id):
     bottle_entry = execute_statement("SELECT * FROM bottles WHERE homie_fb_id = %s AND bottle_name = %s;", args=(homie_fb_id, name), ret=True)
