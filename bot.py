@@ -31,6 +31,7 @@ def config(filename=sys.path[0] + '/config.ini', section='facebook credentials')
             'Section {0} not found in the {1} file'.format(section, filename))
     return creds
 
+# comment comment
 
 class HydroBot(Client):
     all_homies = []
